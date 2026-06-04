@@ -18,6 +18,12 @@ jobs:
         with:
           python-version: '3.10'
 
+      - name: Install Python Dependencies
+        run: pip install rich mcp fastapi uvicorn playwright
+
+      - name: Install Playwright Browsers
+        run: playwright install chromium
+
       - name: Verify CLI Entrypoint
         run: make help
 
@@ -26,7 +32,6 @@ jobs:
         
       - name: Enforce feature_map.json Syntax
         run: |
-          # Fails if JSON is malformed
           if [ -f "feature_map.json" ]; then
             python3 -c "import json; json.load(open('feature_map.json'))"
           fi
