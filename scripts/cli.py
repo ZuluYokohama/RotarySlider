@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Autoresearch Superpowers CLI
+Autoresearch Superpowers CLI with Rich TUI
 Command-line interface for managing maxval vectors, evolution gates, and swarm recursion.
 """
 
@@ -9,6 +9,18 @@ import os
 import sys
 import json
 import subprocess
+import time
+
+try:
+    from rich.console import Console
+    from rich.table import Table
+    from rich.panel import Panel
+    from rich.progress import Progress, SpinnerColumn, TextColumn
+except ImportError:
+    print("Please install 'rich' to use this CLI: pip install rich")
+    sys.exit(1)
+
+console = Console()
 
 def get_target(target_path):
     return os.path.abspath(target_path)
@@ -16,16 +28,24 @@ def get_target(target_path):
 def cmd_evolve(args):
     target = get_target(args.target)
     script = os.path.join(os.path.dirname(__file__), 'recursive_evolution.py')
-    subprocess.run([sys.executable, script, target])
+    
+    with Progress(
+        SpinnerColumn(),
+        TextColumn("[progress.description]{task.description}"),
+        transient=True,
+    ) as progress:
+        progress.add_task(description=f"Booting Infinite Recursive Matrix for {target}...", total=None)
+        # Execute the recursive script, streaming output
+        subprocess.run([sys.executable, script, target])
 
 def cmd_gate(args):
     target = get_target(args.target)
     gate_script = os.path.join(target, 'evolution_gate.py')
     if not os.path.exists(gate_script):
-        print(f"[FATAL] No evolution_gate.py found in {target}. Cannot evaluate MaxVal.")
+        console.print(f"[bold red]FATAL:[/bold red] No evolution_gate.py found in {target}.")
         sys.exit(1)
     
-    print(f"[CLI] Triggering Evolution Gate for {target}...\n")
+    console.print(Panel(f"[bold cyan]Triggering Evolution Gate[/bold cyan]\nTarget: {target}"))
     subprocess.run([sys.executable, gate_script], cwd=target)
 
 def cmd_intent(args):
@@ -49,26 +69,38 @@ def cmd_intent(args):
     with open(map_path, 'w') as f:
         json.dump(data, f, indent=2)
         
-    print(f"[CLI] INTENT INJECTED:")
-    print(f"      Feature: {args.name}")
-    print(f"      Metric:  {args.metric}")
-    print(f"      Status:  PENDING")
+    table = Table(title="Intent Injected Successfully")
+    table.add_column("Property", style="cyan")
+    table.add_column("Value", style="magenta")
+    table.add_row("Feature", args.name)
+    table.add_row("Metric", args.metric)
+    table.add_row("Status", "[yellow]PENDING[/yellow]")
+    console.print(table)
 
 def cmd_status(args):
     target = get_target(args.target)
     map_path = os.path.join(target, 'feature_map.json')
     if not os.path.exists(map_path):
-        print(f"[CLI] No feature_map.json found in {target}")
+        console.print(f"[yellow]No feature_map.json found in {target}[/yellow]")
         sys.exit(0)
         
     with open(map_path, 'r') as f:
         data = json.load(f)
         
-    print(f"\n=== MAXVAL INTENT VECTORS ({target}) ===")
+    table = Table(title=f"MaxVal Intent Vectors ({os.path.basename(target)})", show_header=True, header_style="bold magenta")
+    table.add_column("Status")
+    table.add_column("Feature")
+    table.add_column("Intent Metric")
+    
     for feat in data.get('features', []):
-        status_color = "🟢" if feat['status'] == 'tallied' else "🔴"
-        print(f"{status_color} [{feat['status'].upper()}] {feat['name']} -> {feat['intent']}")
-    print("=========================================\n")
+        if feat['status'] == 'tallied':
+            status = "[bold green]🟢 TALLIED[/bold green]"
+        else:
+            status = "[bold red]🔴 PENDING[/bold red]"
+        
+        table.add_row(status, feat['name'], feat['intent'])
+        
+    console.print(table)
 
 def main():
     parser = argparse.ArgumentParser(description="Autoresearch Superpowers - Swarm CLI")
