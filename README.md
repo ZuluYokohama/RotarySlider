@@ -257,3 +257,9 @@ The matrix is bounded by a `HardwarePipingManager` which protects your OS from O
 - **VRAM Time-Slicing**: Safe CUDA cache flushing during hypothesis benchmarking.
 - **CPU Leasing**: Restricts parallel swarm subprocesses to available physical cores.
 - **Aggressive GC**: Forces Python garbage collection at the end of every epoch.
+
+### The AST Oracle
+You do not have to manually inject intents. RotarySlider includes a static analyzer that reads the Abstract Syntax Tree (AST) of your codebase, detects O(N^2) loops and naked recursion, and autonomously pipes them into the matrix for optimization:
+```bash
+make oracle TARGET=/path/to/project
+```
