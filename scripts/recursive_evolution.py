@@ -32,8 +32,10 @@ def trigger_evolution_gate(target_dir, hw_manager):
     if hw_manager.request_lease(cpu_req=1):
         try:
             print(f"  [GATE] Lease granted. Engaging swarm for hypothesis mutation...")
+            hw_manager.flush_vram() # VRAM time-slicing prep
             subprocess.run([sys.executable, os.path.join(os.path.dirname(__file__), 'evolve.py'), target_dir], capture_output=True)
         finally:
+            hw_manager.flush_vram() # VRAM time-slicing cleanup
             print(f"  [HARDWARE] Releasing compute lease...")
             hw_manager.release_lease(cpu_req=1)
     else:
@@ -76,6 +78,11 @@ def infinite_evolution_loop(target_dir):
                 break
                 
         save_checklist(target_dir, checklist)
+        
+        # GC Aggression (as defined in HARDWARE_OPTIMIZATION_SCOPE.md)
+        reclaimed = hw_manager.collect_garbage()
+        print(f"  [HARDWARE] Epoch GC completed. Objects reclaimed: {reclaimed}")
+        
         time.sleep(1) # Recursive buffer
 
 if __name__ == "__main__":

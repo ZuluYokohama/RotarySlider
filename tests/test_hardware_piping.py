@@ -7,20 +7,23 @@ from hardware_piping import HardwarePipingManager
 
 class TestHardwarePipingManager(unittest.TestCase):
     def test_lease_and_release(self):
-        # Mock a 4-core system
         manager = HardwarePipingManager(max_cpu=4)
-        
-        # Lease 2 cores (Success)
-        self.assertTrue(manager.request_lease(2), "Should successfully lease 2 cores")
-        
-        # Attempt to lease 3 more cores (Fail: 2 + 3 > 4)
-        self.assertFalse(manager.request_lease(3), "Should fail to lease exceeding cores")
-        
-        # Release 2 cores
+        self.assertTrue(manager.request_lease(2))
+        self.assertFalse(manager.request_lease(3))
         manager.release_lease(2)
-        
-        # Attempt to lease 3 cores again (Success: 0 + 3 <= 4)
-        self.assertTrue(manager.request_lease(3), "Should successfully lease after releasing")
+        self.assertTrue(manager.request_lease(3))
+
+    def test_garbage_collection(self):
+        manager = HardwarePipingManager()
+        # Ensure it doesn't crash and returns an int
+        reclaimed = manager.collect_garbage()
+        self.assertIsInstance(reclaimed, int)
+
+    def test_vram_flush(self):
+        manager = HardwarePipingManager()
+        # Should gracefully return boolean without crashing even if PyTorch isn't present
+        success = manager.flush_vram()
+        self.assertIsInstance(success, bool)
 
 if __name__ == '__main__':
     unittest.main()

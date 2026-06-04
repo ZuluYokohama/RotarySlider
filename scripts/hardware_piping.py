@@ -1,5 +1,6 @@
 import os
 import threading
+import gc
 
 class HardwarePipingManager:
     """
@@ -23,3 +24,24 @@ class HardwarePipingManager:
         """Release hardware resources back to the pool."""
         with self.lock:
             self.allocated_cpu = max(0, self.allocated_cpu - cpu_req)
+
+    def flush_vram(self):
+        """
+        VRAM Time-Slicing: Flushes the CUDA cache before and after benchmarking.
+        Safely falls back if PyTorch is not installed or no GPU is available.
+        """
+        try:
+            import torch
+            if torch.cuda.is_available():
+                torch.cuda.empty_cache()
+                return True
+        except ImportError:
+            pass
+        return False
+
+    def collect_garbage(self):
+        """
+        Garbage Collection Aggression: Reclaim memory from discarded sub-optimal branches.
+        """
+        collected = gc.collect()
+        return collected
