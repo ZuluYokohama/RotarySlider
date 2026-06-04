@@ -3,10 +3,10 @@
 > **For agentic workers:** REQUIRED: Use superpowers:subagent-driven-development (if subagents available) or superpowers:executing-plans to implement this plan. Tasks and steps use checkbox (`- [ ]`) syntax for tracking.
 
 ## Phase 1: Python Backend & Playwright Integration (The Visual Matrix)
-- [ ] **Step 1:** Add FastAPI and Playwright dependencies to `pyproject.toml`.
-- [ ] **Step 2:** Create `scripts/visual_matrix.py` to handle headless component rendering and screenshot generation.
-- [ ] **Step 3:** Update `evolution_gate.py` to optionally invoke `visual_matrix.py` if a visual intent is detected in the `feature_map.json`.
-- [ ] **Step 4:** Create `scripts/api_server.py` using FastAPI to expose REST/WebSocket endpoints wrapping the CLI logic.
+- [x] **Step 1:** Add FastAPI and Playwright dependencies to `pyproject.toml`.
+- [x] **Step 2:** Create `scripts/visual_matrix.py` to handle headless component rendering and screenshot generation.
+- [x] **Step 3:** Update `evolution_gate.py` to optionally invoke `visual_matrix.py` if a visual intent is detected in the `feature_map.json`.
+- [x] **Step 4:** Create `scripts/api_server.py` using FastAPI to expose REST/WebSocket endpoints wrapping the CLI logic.
 
 ## Phase 2: The SvelteKit Telemetry Engine
 - [x] **Step 1:** Initialize a SvelteKit project in `ui/telemetry`.
