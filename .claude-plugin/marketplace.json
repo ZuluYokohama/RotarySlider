@@ -1,14 +1,14 @@
 {
-  "name": "superpowers-dev",
-  "description": "Development marketplace for Superpowers core skills library",
+  "name": "autoresearch-superpowers-dev",
+  "description": "Development marketplace for Autoresearch Superpowers core skills library",
   "owner": {
     "name": "Jesse Vincent",
     "email": "jesse@fsck.com"
   },
   "plugins": [
     {
-      "name": "superpowers",
-      "description": "Core skills library for Claude Code: TDD, debugging, collaboration patterns, and proven techniques",
+      "name": "autoresearch-superpowers",
+      "description": "Integrated autonomous research swarm and core skills library for coding agents",
       "version": "5.1.0",
       "source": "./",
       "author": {
