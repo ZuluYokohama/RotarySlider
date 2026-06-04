@@ -231,3 +231,23 @@ Superpowers is built by [Jesse Vincent](https://blog.fsck.com) and the rest of t
 - **Discord**: [Join us](https://discord.gg/35wsABTejz) for community support, questions, and sharing what you're building with Superpowers
 - **Issues**: https://github.com/obra/superpowers/issues
 - **Release announcements**: [Sign up](https://primeradiant.com/superpowers/) to get notified about new versions
+
+## Evolution Matrix & CLI
+
+This framework contains an infinite recursive evolution loop designed to test, validate, and optimize code autonomously. 
+
+### CLI Usage
+To interact with the framework, use the included Makefile or Python CLI:
+```bash
+make help
+make evolve TARGET=/path/to/project
+```
+
+### FastMCP Server
+The framework natively supports the Model Context Protocol (MCP). To allow your local agents (like Claude Desktop or Cursor) to execute the Evolution Gate autonomously:
+```bash
+python scripts/mcp_server.py
+```
+
+### Google Project IDX
+This repository is pre-configured for **Google Project IDX**. Simply import the GitHub repository, and the `.idx/dev.nix` file will automatically provision your Nix environment, Python dependencies (`rich`, `mcp`), and boot the CLI.
