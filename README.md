@@ -251,3 +251,9 @@ python scripts/mcp_server.py
 
 ### Google Project IDX
 This repository is pre-configured for **Google Project IDX**. Simply import the GitHub repository, and the `.idx/dev.nix` file will automatically provision your Nix environment, Python dependencies (`rich`, `mcp`), and boot the CLI.
+
+### Hardware Piping & Resource Management
+The matrix is bounded by a `HardwarePipingManager` which protects your OS from Out-Of-Memory (OOM) errors and CPU throttling. It features:
+- **VRAM Time-Slicing**: Safe CUDA cache flushing during hypothesis benchmarking.
+- **CPU Leasing**: Restricts parallel swarm subprocesses to available physical cores.
+- **Aggressive GC**: Forces Python garbage collection at the end of every epoch.
