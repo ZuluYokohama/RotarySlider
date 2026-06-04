@@ -1,0 +1,32 @@
+name: Evolution Gate V&V
+
+on:
+  pull_request:
+    branches: [ master, main ]
+  push:
+    branches: [ master, main ]
+
+jobs:
+  maxval-evaluation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Verify CLI Entrypoint
+        run: make help
+
+      - name: Execute Framework Integrity Tests
+        run: make test
+        
+      - name: Enforce feature_map.json Syntax
+        run: |
+          # Fails if JSON is malformed
+          if [ -f "feature_map.json" ]; then
+            python3 -c "import json; json.load(open('feature_map.json'))"
+          fi
