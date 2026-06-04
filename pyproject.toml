@@ -1,5 +1,5 @@
 [project]
-name = "autoresearch-superpowers"
+name = "RotarySlider"
 version = "0.1.0"
 description = "Autonomous pretraining research swarm with agentic superpower skills"
 readme = "README.md"

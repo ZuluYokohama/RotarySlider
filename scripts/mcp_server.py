@@ -5,7 +5,7 @@ import json
 import subprocess
 from mcp.server.fastmcp import FastMCP
 
-mcp = FastMCP("autoresearch-superpowers")
+mcp = FastMCP("RotarySlider")
 
 @mcp.tool()
 def inject_intent(target_dir: str, feature_name: str, metric_sla: str) -> str:
