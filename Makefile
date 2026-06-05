@@ -19,3 +19,8 @@ oracle:
 evolve:
 	@if [ -z "$(TARGET)" ]; then echo "Error: TARGET is not set. Use make evolve TARGET=/path"; exit 1; fi
 	$(CLI) evolve $(TARGET)
+
+yolo:
+	@if [ -z "$(TARGET)" ]; then echo "Error: TARGET is not set. Use make yolo TARGET=/path"; exit 1; fi
+	./scripts/chaos_monkey.py $(TARGET)
+	@echo "Chaos injected. Run 'make evolve TARGET=$(TARGET)' to test the matrix."

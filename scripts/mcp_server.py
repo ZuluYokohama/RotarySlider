@@ -44,3 +44,10 @@ def trigger_quantum_scan(target_dir: str) -> str:
     quantum_path = os.path.join(os.path.dirname(__file__), 'quantum_gate.py')
     result = subprocess.run([sys.executable, quantum_path, target_dir], capture_output=True, text=True)
     return result.stdout
+
+@mcp.tool()
+def push_yolo_button(target_dir: str) -> str:
+    """Unleashes the Chaos Monkey, injecting extremely restrictive, chaotic intents into the matrix."""
+    chaos_path = os.path.join(os.path.dirname(__file__), 'chaos_monkey.py')
+    result = subprocess.run([sys.executable, chaos_path, target_dir], capture_output=True, text=True)
+    return result.stdout
