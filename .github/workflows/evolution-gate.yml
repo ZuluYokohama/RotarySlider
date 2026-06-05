@@ -19,10 +19,10 @@ jobs:
           python-version: '3.10'
 
       - name: Install Python Dependencies
-        run: pip install rich mcp fastapi uvicorn playwright
+        run: pip install rich mcp fastapi uvicorn playwright flake8 bandit radon
 
       - name: Install Playwright Browsers
-        run: playwright install chromium
+        run: playwright flake8 bandit radon install chromium
 
       - name: Verify CLI Entrypoint
         run: make help
