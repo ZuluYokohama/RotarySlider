@@ -1,3 +1,4 @@
+import { Logo } from '../components/Logo';
 import { IntentForm, VisualGallery } from './ClientViews';
 
 export default async function FeatureStudio() {
@@ -7,7 +8,10 @@ export default async function FeatureStudio() {
 
   return (
     <div style={{ fontFamily: 'sans-serif', background: '#0d1117', color: '#c9d1d9', minHeight: '100vh', padding: '2rem' }}>
-      <h1 style={{ color: '#58a6ff' }}>Surface & Structure UI</h1>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+        <Logo className="w-16 h-16" />
+        <h1 style={{ color: '#58a6ff', margin: 0 }}>Surface & Structure UI</h1>
+      </div>
       <p style={{ color: '#8b949e', fontSize: '0.9rem', marginBottom: '2rem' }}>Web Frontend Design from <strong>jtechAi Labs</strong></p>
       
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem', marginTop: '2rem' }}>
