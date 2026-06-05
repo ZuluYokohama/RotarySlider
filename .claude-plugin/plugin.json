@@ -1,22 +1,30 @@
 {
-  "name": "autoresearch-superpowers",
-  "description": "Integrated autonomous research swarm and core skills library for coding agents",
-  "version": "5.1.0",
-  "author": {
-    "name": "Jesse Vincent",
-    "email": "jesse@fsck.com"
+  "version": "1.0.0",
+  "name": "rotary-slider-matrix",
+  "description": "Infinite Recursive Swarm Evolution via jtechAi Labs",
+  "author": "ZuluYokohama",
+  "mcpServers": {
+    "rotary-slider": {
+      "command": "python",
+      "args": ["${plugin_dir}/scripts/mcp_server.py"]
+    }
   },
-  "homepage": "https://github.com/obra/superpowers",
-  "repository": "https://github.com/obra/superpowers",
-  "license": "MIT",
-  "keywords": [
-    "skills",
-    "autoresearch",
-    "swarm",
-    "tdd",
-    "debugging",
-    "collaboration",
-    "best-practices",
-    "workflows"
-  ]
+  "skills": [
+    {
+      "name": "ast-oracle-diagnosis",
+      "description": "Trigger the AST Oracle to scan for O(N^2) bottlenecks and inject MaxVal intent vectors.",
+      "command": "make oracle TARGET=${target_dir}"
+    },
+    {
+      "name": "engage-aaa-matrix",
+      "description": "Boot the infinite recursive loop enforcing Flake8, Bandit, Radon, and Visual V&V.",
+      "command": "make evolve TARGET=${target_dir}"
+    }
+  ],
+  "configuration": {
+    "hardware_piping": {
+      "vram_time_slicing": true,
+      "cpu_lease_max": "auto"
+    }
+  }
 }
