@@ -39,7 +39,8 @@ def check_bandit(target_dir):
     print("[AAA PASSED] Bandit Security")
     return True
 
-def check_radon(target_dir):
+def check_radon,
+        check_quantum_crypto(target_dir):
     print("[AAA] Running Radon (Cyclomatic Complexity)...")
     # Fail if any function has a complexity score of 'C' or worse (score > 10)
     code, stdout, stderr = run_command("radon cc -nc .", target_dir)
@@ -53,13 +54,25 @@ def check_radon(target_dir):
     print("[AAA PASSED] Radon Complexity (All functions <= B)")
     return True
 
+def check_quantum_crypto(target_dir):
+    print("[AAA] Running Quantum-Resistant Cryptography Scan...")
+    quantum_script = os.path.join(os.path.dirname(__file__), "quantum_gate.py")
+    code, stdout, _ = run_command(f"python3 {quantum_script} .", target_dir)
+    if code != 0:
+        print("[AAA FAILED] Quantum Gate Violation:")
+        print(stdout)
+        return False
+    print("[AAA PASSED] Quantum Cryptography Security")
+    return True
+
 def run_aaa_suite(target_dir):
     print(f"\n=== Booting AAA Quality V&V Suite on {target_dir} ===")
     
     checks = [
         check_flake8,
         check_bandit,
-        check_radon
+        check_radon,
+        check_quantum_crypto
     ]
     
     for check in checks:

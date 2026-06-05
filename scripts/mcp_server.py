@@ -37,3 +37,10 @@ def trigger_oracle(target_dir: str) -> str:
 if __name__ == "__main__":
     print("Starting RotarySlider MCP Server...")
     mcp.run(transport='stdio')
+
+@mcp.tool()
+def trigger_quantum_scan(target_dir: str) -> str:
+    """Invokes the Quantum Gate to scan the codebase for pre-quantum cryptographic vulnerabilities (RSA, MD5)."""
+    quantum_path = os.path.join(os.path.dirname(__file__), 'quantum_gate.py')
+    result = subprocess.run([sys.executable, quantum_path, target_dir], capture_output=True, text=True)
+    return result.stdout
