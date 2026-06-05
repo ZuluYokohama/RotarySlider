@@ -7,7 +7,8 @@ export default async function FeatureStudio() {
 
   return (
     <div style={{ fontFamily: 'sans-serif', background: '#0d1117', color: '#c9d1d9', minHeight: '100vh', padding: '2rem' }}>
-      <h1 style={{ color: '#58a6ff' }}>RotarySlider Feature Studio</h1>
+      <h1 style={{ color: '#58a6ff' }}>Surface & Structure UI</h1>
+      <p style={{ color: '#8b949e', fontSize: '0.9rem', marginBottom: '2rem' }}>Web Frontend Design from <strong>jtechAi Labs</strong></p>
       
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem', marginTop: '2rem' }}>
         
@@ -36,8 +37,6 @@ export default async function FeatureStudio() {
         {/* Right Column */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
           <section style={{ height: '400px', border: '1px solid #30363d', borderRadius: '8px', overflow: 'hidden' }}>
-            <iframe src="http://localhost:3001" style={{ width: '100%', height: '100%', border: 'none' }} title="Telemetry Engine" />
-          </section>
 
           <section style={{ border: '1px solid #30363d', padding: '1.5rem', borderRadius: '8px' }}>
             <h2 style={{ borderBottom: '1px solid #30363d', paddingBottom: '0.5rem' }}>Visual V&V Gallery</h2>

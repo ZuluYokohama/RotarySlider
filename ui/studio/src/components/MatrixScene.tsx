@@ -3,21 +3,32 @@
 import { useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
+import { AlphaRig } from './AlphaRig';
+import { TelemetryMonitor } from './TelemetryMonitor';
 
 export function MatrixScene() {
-  const meshRef = useRef<THREE.Mesh>(null);
+  const coreRef = useRef<THREE.Mesh>(null);
 
   useFrame((state, delta) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.x += delta * 0.2;
-      meshRef.current.rotation.y += delta * 0.3;
+    if (coreRef.current) {
+      coreRef.current.rotation.x += delta * 0.2;
+      coreRef.current.rotation.y += delta * 0.3;
     }
   });
 
   return (
-    <mesh ref={meshRef}>
-      <torusKnotGeometry args={[3, 1, 100, 16]} />
-      <meshStandardMaterial color="#3fb950" wireframe />
-    </mesh>
+    <group>
+      {/* The Central Rotary Matrix Core */}
+      <mesh ref={coreRef} position={[0, 0, -5]}>
+        <torusKnotGeometry args={[3, 0.5, 128, 32]} />
+        <meshStandardMaterial color="#3fb950" wireframe opacity={0.3} transparent />
+      </mesh>
+
+      {/* Embedded Svelte Telemetry (Phase 3) */}
+      <TelemetryMonitor />
+
+      {/* AI Generated Dog Rig */}
+      <AlphaRig />
+    </group>
   );
 }
