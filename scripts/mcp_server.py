@@ -51,3 +51,10 @@ def push_yolo_button(target_dir: str) -> str:
     chaos_path = os.path.join(os.path.dirname(__file__), 'chaos_monkey.py')
     result = subprocess.run([sys.executable, chaos_path, target_dir], capture_output=True, text=True)
     return result.stdout
+
+@mcp.tool()
+def query_akashic_records(target_dir: str, file_path: str) -> str:
+    """Queries the Evolutionary Memory to see if the current code state has failed a V&V gate in the past."""
+    akashic_path = os.path.join(os.path.dirname(__file__), 'akashic_records.py')
+    result = subprocess.run([sys.executable, akashic_path, target_dir, 'check', file_path], capture_output=True, text=True)
+    return result.stdout
