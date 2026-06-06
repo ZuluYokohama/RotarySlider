@@ -9,6 +9,10 @@ import { useIntentPulse } from '../lib/useIntentPulse';
 import { computeParallaxTarget, damp } from '../lib/parallax';
 import { RotaryDial } from './RotaryDial';
 
+const PARALLAX_INTENSITY = 1.5; // tune lower (e.g. 0.6) for a subtler parallax
+const PARALLAX_LAMBDA = 3;
+const DIAL_Z = -5;
+
 export function MatrixScene() {
   const coreRef = useRef<THREE.Group>(null);
   const pulse = useIntentPulse();
@@ -28,16 +32,16 @@ export function MatrixScene() {
       coreRef.current.scale.setScalar(1 + kick.current * 0.4);
     }
     // Mouse-driven camera parallax (state.pointer is normalized -1..1).
-    const target = computeParallaxTarget({ x: state.pointer.x, y: state.pointer.y }, 1.5);
-    state.camera.position.x = damp(state.camera.position.x, target.x, 3, delta);
-    state.camera.position.y = damp(state.camera.position.y, target.y, 3, delta);
-    state.camera.lookAt(0, 0, -5);
+    const target = computeParallaxTarget(state.pointer, PARALLAX_INTENSITY);
+    state.camera.position.x = damp(state.camera.position.x, target.x, PARALLAX_LAMBDA, delta);
+    state.camera.position.y = damp(state.camera.position.y, target.y, PARALLAX_LAMBDA, delta);
+    state.camera.lookAt(0, 0, DIAL_Z);
   });
 
   return (
     <group>
       {/* The Central Rotary Slider Dial (instanced, O(1)) */}
-      <group ref={coreRef} position={[0, 0, -5]}>
+      <group ref={coreRef} position={[0, 0, DIAL_Z]}>
         <RotaryDial />
       </group>
 

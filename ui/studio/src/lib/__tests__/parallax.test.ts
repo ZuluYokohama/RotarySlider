@@ -22,4 +22,17 @@ describe('damp', () => {
   it('approaches the target as dt grows large', () => {
     expect(damp(0, 10, 5, 100)).toBeCloseTo(10, 5);
   });
+
+  it('does not overshoot a negative target', () => {
+    expect(damp(0, -10, 5, 100)).toBeGreaterThanOrEqual(-10);
+    const step = damp(0, -10, 5, 0.016);
+    expect(step).toBeLessThan(0);
+    expect(step).toBeGreaterThan(-10);
+  });
+
+  it('is frame-rate independent (one dt step == two dt/2 steps)', () => {
+    const oneBig = damp(0, 10, 5, 1 / 30);
+    const twoSmall = damp(damp(0, 10, 5, 1 / 60), 10, 5, 1 / 60);
+    expect(twoSmall).toBeCloseTo(oneBig, 6);
+  });
 });
