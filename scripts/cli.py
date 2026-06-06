@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Autoresearch Superpowers CLI with Rich TUI
-Command-line interface for managing maxval vectors, evolution gates, and swarm recursion.
+IsoZ CLI with Rich TUI
+Command-line interface for IsoZ intent vectors, evolution gates, and the [DEMO] evolution loop.
 """
 
 import argparse
@@ -34,7 +34,7 @@ def cmd_evolve(args):
         TextColumn("[progress.description]{task.description}"),
         transient=True,
     ) as progress:
-        progress.add_task(description=f"Booting Infinite Recursive Matrix for {target}...", total=None)
+        progress.add_task(description=f"[DEMO] Booting the IsoZ evolution loop for {target}...", total=None)
         # Execute the recursive script, streaming output
         subprocess.run([sys.executable, script, target])
 
@@ -87,7 +87,7 @@ def cmd_status(args):
     with open(map_path, 'r') as f:
         data = json.load(f)
         
-    table = Table(title=f"MaxVal Intent Vectors ({os.path.basename(target)})", show_header=True, header_style="bold magenta")
+    table = Table(title=f"Intent Vectors ({os.path.basename(target)})", show_header=True, header_style="bold magenta")
     table.add_column("Status")
     table.add_column("Feature")
     table.add_column("Intent Metric")
@@ -103,11 +103,11 @@ def cmd_status(args):
     console.print(table)
 
 def main():
-    parser = argparse.ArgumentParser(description="Autoresearch Superpowers - Swarm CLI")
+    parser = argparse.ArgumentParser(description="IsoZ - Feature Studio & Gate CLI")
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     # evolve
-    p_evolve = subparsers.add_parser('evolve', help="Boot the infinite recursive evolution matrix")
+    p_evolve = subparsers.add_parser('evolve', help="Run the [DEMO] evolution loop")
     p_evolve.add_argument('target', help="Target project directory")
     p_evolve.set_defaults(func=cmd_evolve)
 
