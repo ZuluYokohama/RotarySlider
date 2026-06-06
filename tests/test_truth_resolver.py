@@ -178,3 +178,48 @@ def test_resolve_threshold_is_overridable():
     assert high.passed is False
     low = tr.resolve(action, actors, threshold=0.5)
     assert low.passed is True
+
+
+FIXTURES = os.path.join(os.path.dirname(__file__), "fixtures")
+
+
+def test_llm_distiller_interface_is_satisfiable_without_implementing_it():
+    # The seam is real: a trivial conforming stub passes the Protocol check,
+    # and the prototype does NOT ship an LLMDistiller class.
+    class _StubLLMDistiller:
+        def distill(self, actor):
+            return tr.AlignmentVector(role=actor.get("role", "x"),
+                                      intent=set(), context=set(), value=set())
+    assert isinstance(_StubLLMDistiller(), tr.Distiller)
+    assert not hasattr(tr, "LLMDistiller")
+
+
+def test_main_returns_zero_and_prints_passed_on_pass_fixture(capsys):
+    rc = tr.main([os.path.join(FIXTURES, "action_pass.json")])
+    out = json.loads(capsys.readouterr().out)
+    assert rc == 0
+    assert out["passed"] is True
+    assert out["value"] == 2.0
+    assert out["dissent"] == []
+
+
+def test_main_returns_one_on_fail_fixture(capsys):
+    rc = tr.main([os.path.join(FIXTURES, "action_fail.json")])
+    out = json.loads(capsys.readouterr().out)
+    assert rc == 1
+    assert out["passed"] is False
+
+
+def test_main_usage_when_no_args(capsys):
+    rc = tr.main([])
+    assert rc == 2
+    assert "usage" in capsys.readouterr().out.lower()
+
+
+def test_resolve_runs_with_subprocess_cli(tmp_path):
+    # End-to-end: invoke the module as a script against the pass fixture.
+    script = os.path.join(os.path.dirname(__file__), "..", "scripts", "truth_resolver.py")
+    fixture = os.path.join(FIXTURES, "action_pass.json")
+    result = subprocess.run([sys.executable, script, fixture], capture_output=True, text=True)
+    assert result.returncode == 0
+    assert '"passed": true' in result.stdout

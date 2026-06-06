@@ -7,7 +7,9 @@ interface so an LLM-backed distiller can drop in later without a rewrite.
 """
 from __future__ import annotations
 
+import json
 import re
+import sys
 from dataclasses import dataclass
 from typing import Protocol, runtime_checkable
 
@@ -153,3 +155,29 @@ def resolve(action: dict, raw_actors: list[dict], distiller: Distiller | None = 
         rationale=rationale,
         dissent=_dissent(vectors, ov["dimensions"], threshold),
     )
+
+
+def main(argv: list[str] | None = None) -> int:
+    """CLI: read an action+actors JSON file, print the Verdict as JSON.
+
+    Returns 0 if the verdict passes, 1 if it fails, 2 on usage error.
+    """
+    argv = list(sys.argv[1:] if argv is None else argv)
+    if not argv:
+        print("usage: truth_resolver.py <action.json>")
+        return 2
+    with open(argv[0], encoding="utf-8") as f:
+        doc = json.load(f)
+    verdict = resolve(doc["action"], doc["actors"])
+    print(json.dumps({
+        "passed": verdict.passed,
+        "alignment": round(verdict.alignment, 4),
+        "value": verdict.value,
+        "rationale": verdict.rationale,
+        "dissent": verdict.dissent,
+    }, indent=2))
+    return 0 if verdict.passed else 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())

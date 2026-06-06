@@ -1,0 +1,7 @@
+{
+  "action": { "summary": "Add a new framework", "value_claims": ["new dependency"] },
+  "actors": [
+    { "role": "user", "intent": "stay minimal", "context": "studio", "values": ["knowledge_integration"] },
+    { "role": "subagent", "intent": "introduce library", "context": "backend", "values": ["knowledge_integration"] }
+  ]
+}
