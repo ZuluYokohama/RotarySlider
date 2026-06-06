@@ -126,3 +126,55 @@ def test_score_value_ignores_unknown_claims():
     b = _vec("agent", ["i"], ["c"], ["knowledge_integration"])
     action = {"value_claims": ["banana"]}
     assert tr.score_value(action, [a, b]) == 0.0
+
+
+def test_resolve_passes_when_aligned_and_value_positive():
+    actors = [
+        {"role": "user", "intent": "reduce drift", "context": "studio", "values": ["knowledge_integration"]},
+        {"role": "agent", "intent": "reduce drift", "context": "studio", "values": ["knowledge_integration"]},
+    ]
+    action = {"summary": "reuse store", "value_claims": ["no new deps"]}
+    v = tr.resolve(action, actors)
+    assert v.passed is True
+    assert v.alignment == 1.0
+    assert v.value == 1.0
+    assert v.dissent == []
+    assert "alignment=1.00" in v.rationale
+
+
+def test_resolve_fails_and_names_dissent_when_misaligned():
+    actors = [
+        {"role": "user", "intent": "reduce drift", "context": "studio", "values": ["knowledge_integration"]},
+        {"role": "subagent", "intent": "rewrite everything", "context": "backend", "values": ["knowledge_integration"]},
+    ]
+    action = {"summary": "x", "value_claims": ["no new deps"]}
+    v = tr.resolve(action, actors)
+    assert v.passed is False
+    # intent and context are disjoint -> both below threshold -> dissent names role:dim
+    assert "user:intent" in v.dissent or "subagent:intent" in v.dissent
+    assert any(d.endswith(":context") for d in v.dissent)
+
+
+def test_resolve_fails_when_value_not_positive_even_if_aligned():
+    actors = [
+        {"role": "user", "intent": "same", "context": "same", "values": ["knowledge_integration"]},
+        {"role": "agent", "intent": "same", "context": "same", "values": ["knowledge_integration"]},
+    ]
+    action = {"summary": "x", "value_claims": ["new dependency"]}  # -1 value
+    v = tr.resolve(action, actors)
+    assert v.alignment == 1.0
+    assert v.value == -1.0
+    assert v.passed is False
+
+
+def test_resolve_threshold_is_overridable():
+    actors = [
+        {"role": "user", "intent": "x y", "context": "c", "values": ["knowledge_integration"]},
+        {"role": "agent", "intent": "y z", "context": "c", "values": ["knowledge_integration"]},
+    ]
+    action = {"value_claims": ["no new deps"]}
+    # intent overlap 1/3, context 1.0, value 1.0 -> aggregate ~0.778
+    high = tr.resolve(action, actors, threshold=0.9)
+    assert high.passed is False
+    low = tr.resolve(action, actors, threshold=0.5)
+    assert low.passed is True

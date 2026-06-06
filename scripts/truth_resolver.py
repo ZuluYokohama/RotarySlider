@@ -116,3 +116,40 @@ def score_value(action: dict, vectors: list[AlignmentVector],
             if dim in shared:
                 score += polarity * weights.get(dim, 1.0)
     return score
+
+
+def _dissent(vectors: list[AlignmentVector], dim_scores: dict, threshold: float) -> list[str]:
+    """For each below-threshold dimension, name the actors holding tokens that
+    are not shared by all actors (i.e. the contributors to the misalignment)."""
+    out: list[str] = []
+    for dim in ("intent", "context", "value"):
+        if dim_scores[dim] >= threshold:
+            continue
+        sets = [getattr(v, dim) for v in vectors]
+        shared = set.intersection(*sets) if sets else set()
+        for v in vectors:
+            if getattr(v, dim) - shared:
+                out.append(f"{v.role}:{dim}")
+    return out
+
+
+def resolve(action: dict, raw_actors: list[dict], distiller: Distiller | None = None,
+            threshold: float = ALIGN_THRESHOLD, weights: dict | None = None) -> Verdict:
+    """Distill actors, score alignment + value, and gate."""
+    distiller = distiller or DeterministicDistiller()
+    vectors = [distiller.distill(a) for a in raw_actors]
+    ov = overlap(vectors)
+    alignment = ov["aggregate"]
+    value = score_value(action, vectors, weights)
+    passed = alignment >= threshold and value > 0.0
+    rationale = (
+        f"alignment={alignment:.2f} (>= {threshold}: {alignment >= threshold}); "
+        f"value={value:.2f} (> 0: {value > 0.0})"
+    )
+    return Verdict(
+        passed=passed,
+        alignment=alignment,
+        value=value,
+        rationale=rationale,
+        dissent=_dissent(vectors, ov["dimensions"], threshold),
+    )
