@@ -223,3 +223,26 @@ def test_resolve_runs_with_subprocess_cli(tmp_path):
     result = subprocess.run([sys.executable, script, fixture], capture_output=True, text=True)
     assert result.returncode == 0
     assert '"passed": true' in result.stdout
+
+
+def test_main_returns_2_on_missing_file(capsys):
+    rc = tr.main([os.path.join(FIXTURES, "does_not_exist.json")])
+    assert rc == 2
+    assert "error" in capsys.readouterr().out.lower()
+
+
+def test_main_returns_2_on_missing_action_key(tmp_path, capsys):
+    bad = tmp_path / "bad.json"
+    bad.write_text('{"actors": []}', encoding="utf-8")  # missing "action" key
+    rc = tr.main([str(bad)])
+    assert rc == 2
+    assert "error" in capsys.readouterr().out.lower()
+
+
+def test_score_value_respects_weights_override_and_partial_fallback():
+    a = _vec("user", ["i"], ["c"], ["performance", "correctness"])
+    b = _vec("agent", ["i"], ["c"], ["performance", "correctness"])
+    action = {"value_claims": ["o(1)", "tested"]}  # performance +1, correctness +1
+    # Override performance weight to 3.0; correctness is absent -> falls back to 1.0.
+    score = tr.score_value(action, [a, b], weights={"performance": 3.0})
+    assert score == 4.0

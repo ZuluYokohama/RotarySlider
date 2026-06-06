@@ -166,9 +166,13 @@ def main(argv: list[str] | None = None) -> int:
     if not argv:
         print("usage: truth_resolver.py <action.json>")
         return 2
-    with open(argv[0], encoding="utf-8") as f:
-        doc = json.load(f)
-    verdict = resolve(doc["action"], doc["actors"])
+    try:
+        with open(argv[0], encoding="utf-8") as f:
+            doc = json.load(f)
+        verdict = resolve(doc["action"], doc["actors"])
+    except (OSError, json.JSONDecodeError, KeyError) as exc:
+        print(f"error: {exc}")
+        return 2
     print(json.dumps({
         "passed": verdict.passed,
         "alignment": round(verdict.alignment, 4),
