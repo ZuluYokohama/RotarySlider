@@ -4,6 +4,35 @@
 > **Author:** ZuluYokohama (b.jones@jtech.ai) via Claude Code brainstorming.
 > **Cycle 1 of 3.** Cycle 2 = code-symbol demotion (module/function renames). Cycle 3 = website (deferred for a real screenshot).
 
+## 0. Isomorphic grounding (the binding frame)
+
+The IsoZ identity must be **isomorphic across four layers** — *concept, framework, process, pattern* —
+each a faithful image of the others, and the requested **condition:state** (the target identity) must be
+*derived from and constrained by* the **activity:states** this effort has actually realized (not
+aspiration). **Semantic truth is the binding invariant:** IsoZ may only assert what the activity:states
+realize; vision-tier content is labeled roadmap, never capability.
+
+**One pattern, four images** — the pattern is *align intent to verified reality; halt on contradiction; never overclaim*:
+
+| Layer | Image of the pattern | Grounded in (activity:state) |
+|---|---|---|
+| **Concept** | Geometric Determinism — truth = coherence (sheaf Global Section); value warps the metric; obstruction → halt. | `docs/theory/` (3-deck synthesis + roadmap) |
+| **Framework** | IsoZ / `truth_resolver` — a deterministic `intent ≡ context ≡ value` alignment gate with a pluggable Oracle seam. | `scripts/truth_resolver.py` (PR #19, merged) |
+| **Process** | The dev method — every claim verified against ground truth before assertion; CodeRabbit-gated; false findings refuted with evidence; `[DEMO]` / vision-vs-seed labeling. | PRs #17–#24 (spec→TDD→two-stage review→PR→CodeRabbit→merge) |
+| **Pattern** | worktree → spec → plan → TDD → review → PR → adversarial gate → merge. | Every merge this effort produced |
+
+These four are **the same isomorphism at four scales** — most pointedly, the *process* that built IsoZ is
+itself an instance of `truth_resolver` (**process ≡ product**).
+
+**Activity:states the condition:state is an image of** (merit already realized, all on `master`):
+C4 #17 (buildable, 3D-visible studio) · C1 #18 (intent tunnel, end-to-end verified) · C2 #20 (instanced
+dial) · C3 #21 (camera parallax) · #22 (plan reconciled to truth) · `truth_resolver` #19 (the concept's
+seed) · #23 (AAA gate repaired) · #24 (swarm honestly `[DEMO]`-labeled — language brought into isomorphism
+with code) · `docs/theory/` (concept).
+
+**Maximum optimization, to the point this effort is at:** the rebrand is not a fresh claim — it is the
+*minimal, truthful naming* of what already coheres. Every IsoZ assertion below must trace to a row above.
+
 ## 1. Goal
 
 Unify the project's four-way fragmented identity (repo *RotarySlider* · README *Autoresearch Superpowers* ·
