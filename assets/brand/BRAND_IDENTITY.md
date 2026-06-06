@@ -1,8 +1,8 @@
-# Surface & Structure UI | RotarySlider Matrix
+# IsoZ — Brand Identity
 ## Brand Identity & Logo Concepts (jtechAi Labs)
 
 ### The Abstraction: Energy Tech Conceptual
-The brand identity for **Surface & Structure UI** and the **RotarySlider Matrix** is rooted in the abstraction of raw, algorithmic energy being structurally harnessed. It is not just "software"—it is the physical manifestation of compute cycles, quantum gates, and infinite recursive loops bound by AAA industrial parameters.
+The brand identity for **IsoZ** is rooted in the abstraction of raw, algorithmic energy being structurally harnessed — compute cycles bound into verifiable structure. The visual language draws on the rotary dial (the mark) and the Alpha Rig (the mascot).
 
 ---
 
@@ -13,12 +13,12 @@ The brand identity for **Surface & Structure UI** and the **RotarySlider Matrix*
   - Energy Core: `#3fb950` (Matrix Green) fading into `#58a6ff` (Quantum Blue).
 - **Meaning:** Represents the *Structure* (the framework, hardware piping, gates) containing and harnessing the *Surface/Energy* (the chaotic, generative power of the AI swarm).
 
-### Concept 2: The Quantum Akashic Lattice
-- **Visual Description:** A hexagonal, lattice-like structure where each node represents a piece of evolutionary memory (The Akashic Records). One specific node is glowing violently, representing a current active mutation. The lines connecting the nodes pulse with energy.
+### Concept 2: The Coherence Lattice
+- **Visual Description:** A hexagonal, lattice-like structure where each node represents a cached prior failure (the failure cache). One specific node is glowing violently, representing a current active mutation. The lines connecting the nodes pulse with energy.
 - **Color Palette:** 
   - Lattice Nodes: Deep Cyberpunk Violet `#8a2be2`
   - Active Mutation Node: Blinding Neon Cyan `#00ffff`.
-- **Meaning:** A nod to the Quantum-Resistant Cryptography gate and the Akashic Evolutionary Memory. It visualizes the system "remembering" and "routing" energy efficiently to solve problems.
+- **Meaning:** A nod to the weak-crypto denylist lint and the failure cache. It visualizes the system "remembering" prior failures and "routing" around them efficiently.
 
 ### Concept 3: The Playwright Shutter (Surface UI)
 - **Visual Description:** A mechanical camera shutter (representing the Playwright Visual V&V layer capturing UI screenshots), but instead of a lens in the center, there is an abstract "Eye" made of binary code or matrix rain.

@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
-  "name": "rotary-slider-matrix",
-  "description": "Infinite Recursive Swarm Evolution via jtechAi Labs",
+  "name": "isoz",
+  "description": "IsoZ — a Feature Studio + intent≡code≡value gate framework, by jtechAi Labs",
   "author": "ZuluYokohama",
   "mcpServers": {
     "rotary-slider": {
@@ -12,12 +12,12 @@
   "skills": [
     {
       "name": "ast-oracle-diagnosis",
-      "description": "Trigger the AST Oracle to scan for O(N^2) bottlenecks and inject MaxVal intent vectors.",
+      "description": "Trigger the AST oracle to scan for O(N^2) bottlenecks and inject value-intent vectors.",
       "command": "make oracle TARGET=${target_dir}"
     },
     {
       "name": "engage-aaa-matrix",
-      "description": "Boot the infinite recursive loop enforcing Flake8, Bandit, Radon, and Visual V&V.",
+      "description": "Run the [DEMO] evolution loop with the Flake8/Bandit/Radon quality gate.",
       "command": "make evolve TARGET=${target_dir}"
     }
   ],
