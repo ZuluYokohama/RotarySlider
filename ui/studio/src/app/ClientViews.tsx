@@ -1,12 +1,14 @@
 "use client";
 
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { emitIntentPulse } from '../lib/intentPulseStore';
 
 export function IntentForm({ targetPath }: { targetPath: string }) {
   const [name, setName] = useState('');
   const [metric, setMetric] = useState('');
-  
+  const router = useRouter();
+
   const submit = async (e: any) => {
     e.preventDefault();
     await fetch('http://localhost:8000/intent', {
@@ -16,6 +18,8 @@ export function IntentForm({ targetPath }: { targetPath: string }) {
     });
     setName(''); setMetric('');
     emitIntentPulse(name, metric, Date.now());
+    // Soft-refresh the server component so the Active Intent Vectors list reflects the new intent, without a full reload (keeps the 3D Canvas alive).
+    router.refresh();
   };
 
   return (
