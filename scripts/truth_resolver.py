@@ -80,3 +80,39 @@ def overlap(vectors: list[AlignmentVector]) -> dict:
     }
     aggregate = sum(dims.values()) / len(dims)
     return {"dimensions": dims, "aggregate": aggregate}
+
+
+# claim phrase -> (value dimension, polarity)
+CLAIM_MAP = {
+    "no new deps": ("knowledge_integration", +1),
+    "reuses": ("knowledge_integration", +1),
+    "dry": ("knowledge_integration", +1),
+    "isomorphic": ("knowledge_integration", +1),
+    "low drift": ("knowledge_integration", +1),
+    "new dependency": ("knowledge_integration", -1),
+    "duplicate": ("knowledge_integration", -1),
+    "drift": ("knowledge_integration", -1),
+    "fork-specific": ("knowledge_integration", -1),
+    "o(1)": ("performance", +1),
+    "o(n^2)": ("performance", -1),
+    "tested": ("correctness", +1),
+    "untested": ("correctness", -1),
+    "secure": ("security", +1),
+    "insecure": ("security", -1),
+}
+
+
+def score_value(action: dict, vectors: list[AlignmentVector],
+                weights: dict | None = None) -> float:
+    """Net value: each known claim credits its dimension (weighted), but only
+    if every actor shares that value dimension. Unknown claims are ignored."""
+    weights = weights or DEFAULT_WEIGHTS
+    shared = set.intersection(*[v.value for v in vectors]) if vectors else set()
+    score = 0.0
+    for claim in action.get("value_claims", []):
+        key = claim.strip().lower()
+        if key in CLAIM_MAP:
+            dim, polarity = CLAIM_MAP[key]
+            if dim in shared:
+                score += polarity * weights.get(dim, 1.0)
+    return score

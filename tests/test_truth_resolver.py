@@ -90,3 +90,39 @@ def test_overlap_all_empty_dimension_is_vacuously_one():
     b = _vec("agent", [], [], [])
     ov = tr.overlap([a, b])
     assert ov["aggregate"] == 1.0
+
+
+def test_score_value_credits_positive_claim_when_dimension_shared():
+    a = _vec("user", ["i"], ["c"], ["knowledge_integration"])
+    b = _vec("agent", ["i"], ["c"], ["knowledge_integration"])
+    action = {"value_claims": ["no new deps", "reuses"]}
+    # both claims map to knowledge_integration (+1 each), dim shared -> +2.0
+    assert tr.score_value(action, [a, b]) == 2.0
+
+
+def test_score_value_no_credit_when_dimension_not_shared():
+    a = _vec("user", ["i"], ["c"], ["correctness"])
+    b = _vec("agent", ["i"], ["c"], ["performance"])  # no shared value dim
+    action = {"value_claims": ["no new deps"]}
+    assert tr.score_value(action, [a, b]) == 0.0
+
+
+def test_score_value_negative_claims_subtract():
+    a = _vec("user", ["i"], ["c"], ["knowledge_integration"])
+    b = _vec("agent", ["i"], ["c"], ["knowledge_integration"])
+    action = {"value_claims": ["new dependency", "duplicate"]}
+    assert tr.score_value(action, [a, b]) == -2.0
+
+
+def test_score_value_maps_claims_to_correct_dimensions():
+    a = _vec("user", ["i"], ["c"], ["performance", "correctness"])
+    b = _vec("agent", ["i"], ["c"], ["performance", "correctness"])
+    action = {"value_claims": ["o(1)", "tested"]}  # performance +1, correctness +1
+    assert tr.score_value(action, [a, b]) == 2.0
+
+
+def test_score_value_ignores_unknown_claims():
+    a = _vec("user", ["i"], ["c"], ["knowledge_integration"])
+    b = _vec("agent", ["i"], ["c"], ["knowledge_integration"])
+    action = {"value_claims": ["banana"]}
+    assert tr.score_value(action, [a, b]) == 0.0
