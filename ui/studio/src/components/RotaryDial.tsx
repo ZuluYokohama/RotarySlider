@@ -7,6 +7,7 @@ import { computeDialInstances } from '../lib/dialInstances';
 
 const TICK_COUNT = 48;
 const RADIUS = 3;
+const HUB_SEGMENTS = 48;
 
 export function RotaryDial() {
   const meshRef = useRef<THREE.InstancedMesh>(null);
@@ -20,7 +21,6 @@ export function RotaryDial() {
     transforms.forEach((t, i) => {
       dummy.position.set(t.position[0], t.position[1], t.position[2]);
       dummy.rotation.set(0, 0, t.rotationZ);
-      dummy.scale.setScalar(t.scale);
       dummy.updateMatrix();
       meshRef.current!.setMatrixAt(i, dummy.matrix);
     });
@@ -35,6 +35,7 @@ export function RotaryDial() {
     <group ref={groupRef}>
       <instancedMesh ref={meshRef} args={[undefined, undefined, TICK_COUNT]}>
         <boxGeometry args={[0.12, 0.5, 0.12]} />
+        {/* toneMapped={false} keeps the emissive glow at full brightness — deliberate, since the pipeline has no bloom/postprocessing. */}
         <meshStandardMaterial
           color="#3fb950"
           emissive="#3fb950"
@@ -44,7 +45,7 @@ export function RotaryDial() {
       </instancedMesh>
       {/* glowing hub */}
       <mesh>
-        <circleGeometry args={[0.6, 48]} />
+        <circleGeometry args={[0.6, HUB_SEGMENTS]} />
         <meshStandardMaterial color="#58a6ff" emissive="#58a6ff" emissiveIntensity={1.2} toneMapped={false} />
       </mesh>
     </group>

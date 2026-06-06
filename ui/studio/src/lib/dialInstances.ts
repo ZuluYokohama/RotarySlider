@@ -3,7 +3,6 @@
 export interface InstanceTransform {
   position: [number, number, number];
   rotationZ: number;
-  scale: number;
 }
 
 export function computeDialInstances(count: number, radius: number): InstanceTransform[] {
@@ -14,7 +13,6 @@ export function computeDialInstances(count: number, radius: number): InstanceTra
     out.push({
       position: [Math.cos(theta) * radius, Math.sin(theta) * radius, 0],
       rotationZ: theta,
-      scale: 1,
     });
   }
   return out;
