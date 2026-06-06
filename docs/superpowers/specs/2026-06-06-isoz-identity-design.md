@@ -17,7 +17,7 @@ realize; vision-tier content is labeled roadmap, never capability.
 | Layer | Image of the pattern | Grounded in (activity:state) |
 |---|---|---|
 | **Concept** | Geometric Determinism — truth = coherence (sheaf Global Section); value warps the metric; obstruction → halt. | `docs/theory/` (3-deck synthesis + roadmap) |
-| **Framework** | IsoZ / `truth_resolver` — a deterministic `intent ≡ context ≡ value` alignment gate with a pluggable Oracle seam. | `scripts/truth_resolver.py` (PR #19, merged) |
+| **Framework** | IsoZ / `truth_resolver` — a deterministic `intent ≡ code ≡ value` alignment gate with a pluggable Oracle seam. | `scripts/truth_resolver.py` (PR #19, merged) |
 | **Process** | The dev method — every claim verified against ground truth before assertion; CodeRabbit-gated; false findings refuted with evidence; `[DEMO]` / vision-vs-seed labeling. | PRs #17–#24 (spec→TDD→two-stage review→PR→CodeRabbit→merge) |
 | **Pattern** | worktree → spec → plan → TDD → review → PR → adversarial gate → merge. | Every merge this effort produced |
 

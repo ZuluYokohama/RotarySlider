@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 IsoZ CLI with Rich TUI
-Command-line interface for managing maxval vectors, evolution gates, and swarm recursion.
+Command-line interface for IsoZ intent vectors, evolution gates, and the [DEMO] evolution loop.
 """
 
 import argparse
@@ -87,7 +87,7 @@ def cmd_status(args):
     with open(map_path, 'r') as f:
         data = json.load(f)
         
-    table = Table(title=f"MaxVal Intent Vectors ({os.path.basename(target)})", show_header=True, header_style="bold magenta")
+    table = Table(title=f"Intent Vectors ({os.path.basename(target)})", show_header=True, header_style="bold magenta")
     table.add_column("Status")
     table.add_column("Feature")
     table.add_column("Intent Metric")
@@ -107,7 +107,7 @@ def main():
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     # evolve
-    p_evolve = subparsers.add_parser('evolve', help="Boot the infinite recursive evolution matrix")
+    p_evolve = subparsers.add_parser('evolve', help="Run the [DEMO] evolution loop")
     p_evolve.add_argument('target', help="Target project directory")
     p_evolve.set_defaults(func=cmd_evolve)
 

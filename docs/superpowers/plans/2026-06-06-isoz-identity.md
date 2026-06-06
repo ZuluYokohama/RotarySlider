@@ -94,7 +94,7 @@ See [LICENSE](LICENSE). The inherited Superpowers and autoresearch layers retain
 
 Run each; confirm the expected result:
 ```bash
-cd /c/Users/Deving-1/rs-isoz
+cd "$(git rev-parse --show-toplevel)"
 grep -c "^# IsoZ" README.md                 # expect 1 (H1 is IsoZ)
 grep -ci "Quantum-Resistant" README.md      # expect 0
 grep -ci "Infinite Recursive LLM Swarm" README.md   # expect 0
@@ -254,8 +254,9 @@ Expected: repo is now `ZuluYokohama/IsoZ`; GitHub creates redirects from the old
 - [ ] **Step 3: Update the local remote in the main worktree**
 
 ```bash
-git -C /c/Users/Deving-1/RotarySlider remote set-url origin https://github.com/ZuluYokohama/IsoZ.git
-git -C /c/Users/Deving-1/RotarySlider remote -v   # confirm origin -> .../IsoZ.git
+# Run from inside the main RotarySlider/IsoZ checkout (the released worktree, not this PR's worktree):
+git remote set-url origin https://github.com/ZuluYokohama/IsoZ.git
+git remote -v   # confirm origin -> .../IsoZ.git
 ```
 
 - [ ] **Step 4: Verify Pages still serves**
