@@ -7,7 +7,7 @@ export default async function FeatureStudio() {
   const data = res ? await res.json() : { features: [] };
 
   return (
-    <div style={{ fontFamily: 'sans-serif', background: '#0d1117', color: '#c9d1d9', minHeight: '100vh', padding: '2rem' }}>
+    <div style={{ fontFamily: 'sans-serif', background: 'rgba(13, 17, 23, 0.72)', color: '#c9d1d9', minHeight: '100vh', padding: '2rem' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
         <Logo className="w-16 h-16" />
         <h1 style={{ color: '#58a6ff', margin: 0 }}>Surface & Structure UI</h1>
@@ -18,12 +18,12 @@ export default async function FeatureStudio() {
         
         {/* Left Column */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-          <section style={{ border: '1px solid #30363d', padding: '1.5rem', borderRadius: '8px' }}>
+          <section style={{ border: '1px solid #30363d', padding: '1.5rem', borderRadius: '8px', background: 'rgba(22, 27, 34, 0.85)' }}>
             <h2 style={{ borderBottom: '1px solid #30363d', paddingBottom: '0.5rem' }}>Inject New Intent</h2>
             <IntentForm targetPath={targetPath} />
           </section>
 
-          <section style={{ border: '1px solid #30363d', padding: '1.5rem', borderRadius: '8px' }}>
+          <section style={{ border: '1px solid #30363d', padding: '1.5rem', borderRadius: '8px', background: 'rgba(22, 27, 34, 0.85)' }}>
             <h2 style={{ borderBottom: '1px solid #30363d', paddingBottom: '0.5rem' }}>Active Intent Vectors</h2>
             <ul style={{ marginTop: '1rem', listStyle: 'none', padding: 0 }}>
               {data.features.map((feat: any, i: number) => (
@@ -40,9 +40,12 @@ export default async function FeatureStudio() {
 
         {/* Right Column */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-          <section style={{ height: '400px', border: '1px solid #30363d', borderRadius: '8px', overflow: 'hidden' }}>
+          {/* Transparent viewport window onto the persistent 3D Canvas behind the dashboard */}
+          <section style={{ height: '400px', border: '1px solid #30363d', borderRadius: '8px', background: 'transparent', display: 'flex', alignItems: 'flex-end', padding: '1rem' }}>
+            <span style={{ color: '#8b949e', fontSize: '0.8rem', fontFamily: 'monospace' }}>// 3D Matrix viewport — RotarySlider dial renders behind this surface</span>
+          </section>
 
-          <section style={{ border: '1px solid #30363d', padding: '1.5rem', borderRadius: '8px' }}>
+          <section style={{ border: '1px solid #30363d', padding: '1.5rem', borderRadius: '8px', background: 'rgba(22, 27, 34, 0.85)' }}>
             <h2 style={{ borderBottom: '1px solid #30363d', paddingBottom: '0.5rem' }}>Visual V&V Gallery</h2>
             <VisualGallery />
           </section>
