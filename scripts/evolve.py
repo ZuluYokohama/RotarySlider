@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 """
-maxval.effect.intent - Autonomous Evolution Meta-Loop
-Applies continuous maximum-value effect vectors to a target project.
+maxval.effect.intent - Evolution Meta-Loop (DEMONSTRATION)
+
+DEMO/STUB: this orchestrates the baseline -> apply -> finalize phases but does
+NOT dispatch any real LLM swarm or mutate code. apply_maxval_vector() is a
+placeholder; finalize_effect() reports a simulated outcome. See README/positioning.
 """
 
 import os
@@ -29,16 +32,15 @@ def baseline_intent(target_dir):
 
 def apply_maxval_vector(target_dir):
     """
-    Simulates the injection of an Autoresearch Swarm mutation.
-    In a live environment, this dispatches parallel agent sub-processes.
+    STUB: placeholder for swarm dispatch. Does nothing yet; a live build would
+    dispatch parallel agent sub-processes and gate their results.
     """
-    print("[VECTOR] Dispatching parallel swarm agents to discover maxval optimizations...")
-    # Placeholder for actual LLM agent dispatching logic (subagent-driven-development)
-    print("[VECTOR] Swarm returned 3 potential intent paths. Running Evolution Gate on all...")
+    # STUB: no real LLM agents are dispatched here yet.
+    print("[VECTOR][DEMO] Swarm dispatch is not implemented — no real LLM agents are run.")
+    print("[VECTOR][DEMO] (A live build would dispatch parallel agents here and gate the results.)")
     
 def finalize_effect():
-    print("[MAXVAL] Optimal effect achieved. Intent vectors aligned.")
-    print("[MAXVAL] Branch cleanly merged. Continuous evolution cycle complete.")
+    print("[MAXVAL][DEMO] Simulated effect complete — no real optimization was performed and no branch was merged.")
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
