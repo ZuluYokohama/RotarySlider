@@ -53,3 +53,40 @@ def test_deterministic_distiller_defaults_for_missing_fields():
     v = tr.DeterministicDistiller().distill({})
     assert v.role == "unknown"
     assert v.intent == set() and v.context == set() and v.value == set()
+
+
+def _vec(role, intent, context, value):
+    return tr.AlignmentVector(role=role, intent=set(intent), context=set(context), value=set(value))
+
+
+def test_overlap_identical_actors_is_one():
+    a = _vec("user", ["x", "y"], ["c"], ["correctness"])
+    b = _vec("agent", ["x", "y"], ["c"], ["correctness"])
+    ov = tr.overlap([a, b])
+    assert ov["dimensions"] == {"intent": 1.0, "context": 1.0, "value": 1.0}
+    assert ov["aggregate"] == 1.0
+
+
+def test_overlap_disjoint_actors_is_zero():
+    a = _vec("user", ["x"], ["c1"], ["correctness"])
+    b = _vec("agent", ["y"], ["c2"], ["performance"])
+    ov = tr.overlap([a, b])
+    assert ov["dimensions"] == {"intent": 0.0, "context": 0.0, "value": 0.0}
+    assert ov["aggregate"] == 0.0
+
+
+def test_overlap_partial_is_exact_jaccard():
+    # intent: {x,y} vs {y,z} -> inter {y}=1, union {x,y,z}=3 -> 1/3
+    a = _vec("user", ["x", "y"], ["c"], ["correctness"])
+    b = _vec("agent", ["y", "z"], ["c"], ["correctness"])
+    ov = tr.overlap([a, b])
+    assert abs(ov["dimensions"]["intent"] - (1 / 3)) < 1e-9
+    assert ov["dimensions"]["context"] == 1.0
+    assert ov["dimensions"]["value"] == 1.0
+
+
+def test_overlap_all_empty_dimension_is_vacuously_one():
+    a = _vec("user", [], [], [])
+    b = _vec("agent", [], [], [])
+    ov = tr.overlap([a, b])
+    assert ov["aggregate"] == 1.0

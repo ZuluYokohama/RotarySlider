@@ -55,3 +55,28 @@ class DeterministicDistiller:
             context=_tokens(actor.get("context", "")),
             value={v.strip().lower() for v in actor.get("values", [])},
         )
+
+
+def _jaccard_all(sets: list[set[str]]) -> float:
+    """Multi-set Jaccard: |intersection of all| / |union of all|.
+
+    Empty union (every actor empty on this dimension) is vacuously aligned -> 1.0.
+    """
+    if not sets:
+        return 1.0
+    union: set[str] = set().union(*sets)
+    if not union:
+        return 1.0
+    inter = set(sets[0]).intersection(*sets[1:])
+    return len(inter) / len(union)
+
+
+def overlap(vectors: list[AlignmentVector]) -> dict:
+    """Per-dimension and aggregate alignment across actors."""
+    dims = {
+        "intent": _jaccard_all([v.intent for v in vectors]),
+        "context": _jaccard_all([v.context for v in vectors]),
+        "value": _jaccard_all([v.value for v in vectors]),
+    }
+    aggregate = sum(dims.values()) / len(dims)
+    return {"dimensions": dims, "aggregate": aggregate}
