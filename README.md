@@ -1,6 +1,6 @@
 # IsoZ
 
-> Prototype 0.001a — in dev. Last human update 6 Jun 26 (mr.orange@jtech.ai).
+> Prototype 0.001a — in dev. Last human update 6 Jun 26 (open an issue).
 
 **IsoZ** is a *Feature Studio* for agentic development — a Next.js + React-Three-Fiber 3D control surface (with a FastAPI backend and a SvelteKit telemetry panel) over a pluggable framework of verification **gates**. Its thesis is a single idea made runnable: a **deterministic `intent ≡ code ≡ value` alignment gate** (`scripts/truth_resolver.py`). IsoZ is built on the **Superpowers** development methodology and Andrej Karpathy's **autoresearch** training code, and is developed by **jtechAi Labs (ZuluYokohama)**.
 
