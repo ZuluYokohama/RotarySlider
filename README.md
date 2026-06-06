@@ -13,7 +13,7 @@ IsoZ is the honest, minimal, **running** seed of a larger theory — *Geometric 
 - [`docs/theory/GEOMETRIC_DETERMINISM.md`](docs/theory/GEOMETRIC_DETERMINISM.md) — the synthesis (3 decks → one framework).
 - [`docs/theory/TRUTH_RESOLVER_ROADMAP.md`](docs/theory/TRUTH_RESOLVER_ROADMAP.md) — v1 (shipped) → v2 sheaf coherence → v3 commit-vs-resolve.
 
-**Honesty split:** the *theory decks are the vision*; the *code is the current seed*. Anything not yet in code (ATFT, the Ternary-Crystal hardware substrate, sheaf-v2) is labeled **roadmap**, never capability. Today, `truth_resolver` is a 187-line deterministic gate that scores intent/context/value overlap; that is the real, shipped state.
+**Honesty split:** the *theory decks are the vision*; the *code is the current seed*. Anything not yet in code (ATFT, the Ternary-Crystal hardware substrate, sheaf-v2) is labeled **roadmap**, never capability. Today, `truth_resolver` is a compact, deterministic gate that scores intent/context/value overlap; that is the real, shipped state.
 
 ## What's IsoZ-original vs inherited
 
