@@ -34,7 +34,7 @@ def trigger_evolution_gate(target_dir, hw_manager):
     print(f"  [HARDWARE] Requesting compute lease...")
     if hw_manager.request_lease(cpu_req=1):
         try:
-            print(f"  [GATE][DEMO] Lease granted. Running the evolve.py stub (no real swarm)...")
+            print("  [GATE][DEMO] Lease granted. Running the evolve.py stub (no real swarm)...")
             hw_manager.flush_vram() # VRAM time-slicing prep
             subprocess.run([sys.executable, os.path.join(os.path.dirname(__file__), 'evolve.py'), target_dir], capture_output=True)
         finally:
@@ -42,7 +42,7 @@ def trigger_evolution_gate(target_dir, hw_manager):
             print(f"  [HARDWARE] Releasing compute lease...")
             hw_manager.release_lease(cpu_req=1)
     else:
-        print(f"  [HARDWARE][DEMO] Lease denied (System fully utilized). Simulated mutation queued for next cycle.")
+        print("  [HARDWARE][DEMO] Lease denied (System fully utilized). Simulated mutation queued for next cycle.")
 
 def infinite_evolution_loop(target_dir):
     epoch = 0
