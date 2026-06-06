@@ -6,6 +6,7 @@ import * as THREE from 'three';
 import { AlphaRig } from './AlphaRig';
 import { TelemetryMonitor } from './TelemetryMonitor';
 import { useIntentPulse } from '../lib/useIntentPulse';
+import { computeParallaxTarget, damp } from '../lib/parallax';
 import { RotaryDial } from './RotaryDial';
 
 export function MatrixScene() {
@@ -26,6 +27,11 @@ export function MatrixScene() {
     if (coreRef.current) {
       coreRef.current.scale.setScalar(1 + kick.current * 0.4);
     }
+    // Mouse-driven camera parallax (state.pointer is normalized -1..1).
+    const target = computeParallaxTarget({ x: state.pointer.x, y: state.pointer.y }, 1.5);
+    state.camera.position.x = damp(state.camera.position.x, target.x, 3, delta);
+    state.camera.position.y = damp(state.camera.position.y, target.y, 3, delta);
+    state.camera.lookAt(0, 0, -5);
   });
 
   return (
