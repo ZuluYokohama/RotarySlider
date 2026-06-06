@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
+import { emitIntentPulse } from '../lib/intentPulseStore';
 
 export function IntentForm({ targetPath }: { targetPath: string }) {
   const [name, setName] = useState('');
@@ -14,7 +15,7 @@ export function IntentForm({ targetPath }: { targetPath: string }) {
       body: JSON.stringify({ target: targetPath, name, metric })
     });
     setName(''); setMetric('');
-    window.location.reload(); // Quick refresh for MVP
+    emitIntentPulse(name, metric, Date.now());
   };
 
   return (
