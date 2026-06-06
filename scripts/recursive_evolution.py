@@ -42,7 +42,7 @@ def trigger_evolution_gate(target_dir, hw_manager):
             print(f"  [HARDWARE] Releasing compute lease...")
             hw_manager.release_lease(cpu_req=1)
     else:
-        print(f"  [HARDWARE] Lease denied (System fully utilized). Swarm mutation queued for next cycle.")
+        print(f"  [HARDWARE][DEMO] Lease denied (System fully utilized). Simulated mutation queued for next cycle.")
 
 def infinite_evolution_loop(target_dir):
     epoch = 0
@@ -61,7 +61,7 @@ def infinite_evolution_loop(target_dir):
             
         if is_perfect(checklist):
             print("[PERFECT] Derived checklist is fully tallied. All features mapped and gated.")
-            print("[TERMINATE] Recursive evolution achieved absolute MaxVal. Halting loop.")
+            print("[TERMINATE][DEMO] Demonstration loop complete — all features tallied (no real MaxVal optimization performed).")
             break
             
         print("[STATE] Sub-optimal state detected. Deriving pending intents:")
