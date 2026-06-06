@@ -32,4 +32,27 @@ describe('intentPulseStore', () => {
     emitIntentPulse('C', 'm', 3);
     expect(calls).toBe(2);
   });
+
+  it('returns a stable reference between emits and a new one after emit', () => {
+    emitIntentPulse('A', 'm', 1);
+    const first = getIntentPulse();
+    expect(getIntentPulse()).toBe(first);     // same ref between emits -> no tearing
+    emitIntentPulse('B', 'm', 2);
+    expect(getIntentPulse()).not.toBe(first); // new ref after emit -> re-render fires
+  });
+
+  it('supports multiple subscribers and unsubscribes them independently', () => {
+    let a = 0;
+    let b = 0;
+    const unsubA = subscribeIntentPulse(() => { a += 1; });
+    const unsubB = subscribeIntentPulse(() => { b += 1; });
+    emitIntentPulse('x', 'm', 1);
+    expect(a).toBe(1);
+    expect(b).toBe(1);
+    unsubA();
+    emitIntentPulse('y', 'm', 2);
+    expect(a).toBe(1); // A no longer notified
+    expect(b).toBe(2); // B still notified
+    unsubB();
+  });
 });

@@ -19,6 +19,9 @@ export function MatrixScene() {
       kick.current = 1;
     }
     kick.current = Math.max(0, kick.current - delta * 1.5);
+    // The pop is animated; if the Canvas is ever switched to frameloop="demand",
+    // keep requesting frames while the kick decays (no-op under the default "always").
+    if (kick.current > 0) state.invalidate();
     if (coreRef.current) {
       coreRef.current.rotation.x += delta * 0.2;
       coreRef.current.rotation.y += delta * 0.3;

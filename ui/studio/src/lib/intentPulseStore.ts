@@ -9,6 +9,9 @@ export interface IntentPulse {
   at: number; // epoch ms, supplied by caller (keeps the store deterministic/testable)
 }
 
+// Client-side singleton: the module is re-evaluated per server request, but the
+// server snapshot is always null (emits only happen client-side), so per-request
+// reset is harmless.
 let current: IntentPulse | null = null;
 let count = 0;
 const listeners = new Set<PulseListener>();
