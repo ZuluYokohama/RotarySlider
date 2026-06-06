@@ -26,7 +26,7 @@ or touch the in-flight R3F work.
 Each actor contributes an `AlignmentVector { intent, context, value }`. The pipeline isolates the
 semantic step to `Distiller.distill`:
 
-```
+```text
 Distiller.distill(raw_actor)  -> AlignmentVector        # ← THE SEAM (deterministic now, LLM later)
 overlap(vectors)              -> per-dimension alignment 0..1   # deterministic (Jaccard)
 score_value(action, vectors)  -> net value (float)             # deterministic (weighted delta)

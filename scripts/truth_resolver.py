@@ -15,7 +15,7 @@ from typing import Protocol, runtime_checkable
 
 ALIGN_THRESHOLD = 0.5
 VALUE_DIMENSIONS = ("correctness", "performance", "security", "knowledge_integration")
-DEFAULT_WEIGHTS = {d: 1.0 for d in VALUE_DIMENSIONS}
+DEFAULT_WEIGHTS = dict.fromkeys(VALUE_DIMENSIONS, 1.0)
 
 
 @dataclass
