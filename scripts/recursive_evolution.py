@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
 """
-Infinite Recursive Evolution Loop with Hardware Piping
-Loops continuously until the derived feature checklist reaches "perfect" state.
-Applies MaxVal/Effect/Intent vectors through Gated Evolution on each epoch.
+Recursive Evolution Loop with Hardware Piping (DEMONSTRATION)
+
+DEMO: this loops over feature_map.json and, each epoch, deterministically marks
+one pending feature as 'tallied' until all are tallied. It does NOT run a real
+LLM swarm or mutate code; trigger_evolution_gate() invokes the evolve.py stub.
+The HardwarePipingManager leasing/GC is real; the "evolution" is simulated.
 """
 
 import os
@@ -31,7 +34,7 @@ def trigger_evolution_gate(target_dir, hw_manager):
     print(f"  [HARDWARE] Requesting compute lease...")
     if hw_manager.request_lease(cpu_req=1):
         try:
-            print(f"  [GATE] Lease granted. Engaging swarm for hypothesis mutation...")
+            print("  [GATE][DEMO] Lease granted. Running the evolve.py stub (no real swarm)...")
             hw_manager.flush_vram() # VRAM time-slicing prep
             subprocess.run([sys.executable, os.path.join(os.path.dirname(__file__), 'evolve.py'), target_dir], capture_output=True)
         finally:
@@ -39,11 +42,11 @@ def trigger_evolution_gate(target_dir, hw_manager):
             print(f"  [HARDWARE] Releasing compute lease...")
             hw_manager.release_lease(cpu_req=1)
     else:
-        print(f"  [HARDWARE] Lease denied (System fully utilized). Swarm mutation queued for next cycle.")
+        print("  [HARDWARE][DEMO] Lease denied (System fully utilized). Simulated mutation queued for next cycle.")
 
 def infinite_evolution_loop(target_dir):
     epoch = 0
-    print("[INIT] Booting Infinite Recursive Evolution Matrix...")
+    print("[INIT][DEMO] Booting the Evolution Matrix demonstration loop (deterministic tally; no real LLM swarm)...")
     hw_manager = HardwarePipingManager()
     print(f"[INIT] HardwarePipingManager active. Max bounded CPU units: {hw_manager.max_cpu}")
     
@@ -58,7 +61,7 @@ def infinite_evolution_loop(target_dir):
             
         if is_perfect(checklist):
             print("[PERFECT] Derived checklist is fully tallied. All features mapped and gated.")
-            print("[TERMINATE] Recursive evolution achieved absolute MaxVal. Halting loop.")
+            print("[TERMINATE][DEMO] Demonstration loop complete — all features tallied (no real MaxVal optimization performed).")
             break
             
         print("[STATE] Sub-optimal state detected. Deriving pending intents:")
@@ -74,7 +77,7 @@ def infinite_evolution_loop(target_dir):
         for feat in checklist['features']:
             if feat['status'] != 'tallied':
                 feat['status'] = 'tallied'
-                print(f"  [MAXVAL] Evolution successful! Feature '{feat['name']}' tallied & mapped.")
+                print(f"  [MAXVAL][DEMO] Simulated success: feature '{feat['name']}' marked 'tallied' (no real evolution performed).")
                 break
                 
         save_checklist(target_dir, checklist)
