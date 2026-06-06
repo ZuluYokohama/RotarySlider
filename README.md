@@ -232,6 +232,9 @@ Superpowers is built by [Jesse Vincent](https://blog.fsck.com) and the rest of t
 - **Issues**: https://github.com/obra/superpowers/issues
 - **Release announcements**: [Sign up](https://primeradiant.com/superpowers/) to get notified about new versions
 
+## The 1:1 Isomorphism
+RotarySlider is built on the philosophical and architectural doctrine of **1:1 Isomorphism** between `Intent`, `Code Ops`, and `Value Gen`. Read the [Isomorphism Manifesto](docs/ISOMORPHISM_MANIFESTO.md) to understand the Truth in Intent.
+
 ## Evolution Matrix & CLI
 
 This framework contains an infinite recursive evolution loop designed to test, validate, and optimize code autonomously. 
