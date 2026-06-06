@@ -1,0 +1,7 @@
+{
+  "action": { "summary": "Reuse the existing store", "value_claims": ["no new deps", "reuses"] },
+  "actors": [
+    { "role": "user", "intent": "reduce drift", "context": "studio", "values": ["knowledge_integration"] },
+    { "role": "agent", "intent": "reduce drift", "context": "studio", "values": ["knowledge_integration"] }
+  ]
+}
