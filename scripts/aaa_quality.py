@@ -39,8 +39,7 @@ def check_bandit(target_dir):
     print("[AAA PASSED] Bandit Security")
     return True
 
-def check_radon,
-        check_quantum_crypto(target_dir):
+def check_radon(target_dir):
     print("[AAA] Running Radon (Cyclomatic Complexity)...")
     # Fail if any function has a complexity score of 'C' or worse (score > 10)
     code, stdout, stderr = run_command("radon cc -nc .", target_dir)
